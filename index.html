@@ -3,128 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mon Espace Personnel</title>
-    <style>
-        /* Style général */
-        body {
-            font-family: 'Segoe UI', sans-serif;
-            line-height: 1.6;
-            margin: 0;
-            background-color: #f9f9f9;
-            color: #333;
-        }
-
-        /* Barre de navigation */
-        nav {
-            background: #2c3e50;
-            color: white;
-            padding: 1rem;
-            text-align: center;
-            position: sticky;
-            top: 0;
-        }
-
-        /* En-tête */
-        header {
-            background: #3498db;
-            color: white;
-            padding: 60px 20px;
-            text-align: center;
-        }
-
-        /* Contenu principal */
-        .container {
-            max-width: 800px;
-            margin: 20px auto;
-            padding: 20px;
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-
-        /* Section des "choses" que tu ajoutes */
-        .article {
-            border-bottom: 1px solid #eee;
-            padding: 20px 0;
-        }
-
-        .article:last-child {
-            border-bottom: none;
-        }
-
-        h2 { color: #3498db; }
-
-        footer {
-            text-align: center;
-            padding: 20px;
-            font-size: 0.8rem;
-            color: #777;
-        }
-
-        /* Bouton interactif */
-        .btn {
-            background: #e74c3c;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-    </style>
+    <title>Restaurant Professionnel - Tutoriel</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-    <nav>
-        <strong>Mon Site Personnel</strong>
-    </nav>
-
     <header>
-        <h1>Bienvenue sur mon espace</h1>
-        <p>Ici, je partage mes idées, mes projets et mes trouvailles.</p>
+        <a href="#" class="logo">Resto<span>.</span></a>
+        <div class="menuToggle" onclick="toggleMenu();"></div>
+        <ul class="navbar">
+            <li><a href="#accueil" onclick="toggleMenu();">Accueil</a></li>
+            <li><a href="#propos" onclick="toggleMenu();">À propos</a></li>
+            <li><a href="#menu" onclick="toggleMenu();">Menu</a></li>
+            <li><a href="#expert" onclick="toggleMenu();">Experts</a></li>
+            <li><a href="#temoignage" onclick="toggleMenu();">Témoignages</a></li>
+            <li><a href="#contact" onclick="toggleMenu();">Contact</a></li>
+        </ul>
     </header>
 
-    <div class="container">
-        <section class="article">
-            <h2>À propos de moi</h2>
-            <p>Bonjour ! Je suis en train d'apprendre à coder mon propre site internet. C'est ici que je vais mettre mes premières créations.</p>
-        </section>
+    <section class="banniere" id="accueil">
+        <div class="contenu">
+            <h2>Que Du Goût</h2>
+            <p>Découvrez une expérience culinaire unique avec nos chefs étoilés. Un design moderne inspiré de la vidéo de Yao Kevin.</p>
+            <a href="#menu" class="btn">Notre Menu</a>
+        </div>
+    </section>
 
-        <section class="article">
-            <h2>Mes Projets</h2>
-            <ul id="liste-projets">
-                <li>Apprentissage du HTML/CSS</li>
-                <li>Création de mon premier site</li>
-            </ul>
-        </section>
+    <section class="propos" id="propos">
+        <div class="row">
+            <div class="col50">
+                <h2 class="titre-texte"><span>A</span> Propos de Nous</h2>
+                <p>Nous utilisons des produits frais et locaux pour garantir la meilleure qualité possible à nos clients.<br><br>Notre équipe est passionnée par l'art de la cuisine et l'innovation constante.</p>
+            </div>
+            <div class="col50">
+                <div class="imgAj">
+                    <img src="https://images.pexels.com/photos/1640777/pexels-photo-1640777.jpeg" alt="image">
+                </div>
+            </div>
+        </div>
+    </section>
 
-        <section class="article">
-            <h2>Ajouter une note rapide</h2>
-            <input type="text" id="noteInput" placeholder="Écris quelque chose...">
-            <button class="btn" onclick="ajouterNote()">Ajouter</button>
-            <p id="message"></p>
-        </section>
-    </div>
-
-    <footer>
-        <p>© 2026 - Créé par moi-même</p>
-    </footer>
-
-    <script>
-        // JavaScript pour ajouter du contenu dynamiquement
-        function ajouterNote() {
-            const input = document.getElementById('noteInput');
-            const liste = document.getElementById('liste-projets');
-            
-            if (input.value !== "") {
-                const nouvelItem = document.createElement('li');
-                nouvelItem.textContent = input.value;
-                liste.appendChild(nouvelItem);
-                input.value = ""; // Vide le champ
-            } else {
-                alert("Écris quelque chose d'abord !");
-            }
-        }
-    </script>
-
+    <script src="script.js"></script>
 </body>
 </html>
