@@ -1,102 +1,47 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap');
+// 1. Menu Sticky
+window.addEventListener('scroll', function(){
+    const header = document.querySelector('header');
+    header.classList.toggle("sticky", window.scrollY > 0);
+});
 
-* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; scroll-behavior: smooth; }
-
-/* Empêche le menu de cacher le début des sections */
-section { scroll-margin-top: 80px; }
-
-p { font-weight: 300; color: #111; }
-
-header {
-    position: fixed; top: 0; left: 0; width: 100%;
-    padding: 40px 100px; z-index: 10000;
-    display: flex; justify-content: space-between; align-items: center;
-    transition: 0.5s;
+// 2. Menu Mobile
+function toggleMenu(){
+    const navbar = document.querySelector('.navbar');
+    navbar.classList.toggle('active');
 }
 
-header.sticky {
-    background: #fff; padding: 10px 100px;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.05);
-}
-
-header .logo { color: #fff; font-size: 2em; font-weight: 700; text-decoration: none; }
-header.sticky .logo { color: #111; }
-header .logo span { color: #ff0157; }
-
-.navbar { display: flex; }
-.navbar li { list-style: none; }
-.navbar li a { color: #fff; text-decoration: none; margin-left: 30px; font-weight: 300; }
-header.sticky .navbar li a { color: #111; }
-header .navbar li a:hover { color: #ff0157; }
-
-/* Bouton Menu Mobile (Caché sur PC) */
-.menuToggle {
-    position: relative; width: 40px; height: 40px;
-    background: url('https://cdn-icons-png.flaticon.com/512/7710/7710488.png');
-    background-size: 30px; background-repeat: no-repeat; background-position: center;
-    cursor: pointer; display: none;
-}
-
-.banniere {
-    position: relative; width: 100%; min-height: 100vh;
-    display: flex; justify-content: center; align-items: center;
-    background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.pexels.com/photos/941861/pexels-photo-941861.jpeg');
-    background-size: cover; background-position: center; text-align: center;
-}
-
-.banniere .contenu h2 { font-size: 5em; color: #fff; }
-.banniere .contenu p { font-size: 1.2em; color: #fff; }
-
-.btn {
-    background: #ff0157; color: #fff; padding: 10px 30px;
-    display: inline-block; text-decoration: none; margin-top: 20px;
-    text-transform: uppercase; letter-spacing: 2px;
-}
-
-.propos { padding: 100px; }
-.row { display: flex; justify-content: space-between; flex-wrap: wrap; }
-.col50 { width: 48%; }
-.imgAj { width: 100%; height: 400px; }
-.imgAj img { width: 100%; height: 100%; object-fit: cover; }
-.titre-texte { color: #111; font-size: 2em; font-weight: 300; margin-bottom: 20px; text-align: center; }
-.titre-texte span { color: #ff0157; font-weight: 700; font-size: 1.5em; }
-
-.menu { background: #f7f7f7; padding: 100px; text-align: center; }
-.menu .contenu { display: flex; justify-content: center; flex-wrap: wrap; margin-top: 40px; }
-.menu .contenu .box { width: 340px; margin: 20px; border: 15px solid #fff; box-shadow: 0 5px 35px rgba(0,0,0,0.08); cursor: pointer; transition: 0.5s; }
-.menu .contenu .box:hover { transform: scale(1.05); }
-.menu .contenu .box .imbox { width: 100%; height: 300px; }
-.menu .contenu .box .imbox img { width: 100%; height: 100%; object-fit: cover; }
-
-/* MODALE GALERIE */
-.modale { display: none; position: fixed; z-index: 20000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); }
-.modale-contenu { background: #fff; margin: 5% auto; padding: 20px; width: 80%; max-height: 80vh; overflow-y: auto; border-radius: 10px; }
-.bouton-fermer { color: #ff0157; float: right; font-size: 40px; font-weight: bold; cursor: pointer; }
-.grille-photos { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-top: 20px; }
-.grille-photos div { text-align: center; }
-.grille-photos img { width: 100%; height: 150px; object-fit: cover; border-radius: 5px; }
-
-/* SECTION CONTACT */
-.contact { padding: 100px 50px; text-align: center; background: #fff; }
-.contenu-contact { display: flex; justify-content: center; flex-wrap: wrap; margin-top: 40px; }
-.contact-box { width: 280px; margin: 15px; padding: 20px; background: #f9f9f9; border-radius: 20px; transition: 0.3s; }
-.contact-box:hover { background: #ff0157; transform: translateY(-5px); }
-.contact-box a { text-decoration: none; color: #111; }
-.contact-box img { width: 50px; margin-bottom: 10px; }
-.contact-box:hover h3, .contact-box:hover p { color: #fff; }
-
-/* MOBILE RESPONSIVE */
-@media (max-width: 991px) {
-    header, header.sticky { padding: 10px 20px; background: #fff; }
-    header .logo, header.sticky .logo { color: #111; }
-    .menuToggle { display: block; filter: invert(1); }
-    .navbar {
-        display: none; flex-direction: column; position: fixed;
-        top: 60px; left: 0; width: 100%; height: 100%; background: #fff;
-        justify-content: center; align-items: center;
+// 3. Galerie
+function ouvrirGalerie(type) {
+    const modale = document.getElementById('fenetreGalerie');
+    const titre = document.getElementById('titreGalerie');
+    const grille = document.getElementById('contenuPhotos');
+    
+    grille.innerHTML = "";
+    
+    if (type === 'gateaux') {
+        titre.innerText = "Nos Spécialités Sucrées";
+        grille.innerHTML = `
+            <div><img src="https://images.pexels.com/photos/1070850/pexels-photo-1070850.jpeg"><p>Gâteau Royal</p></div>
+            <div><img src="https://images.pexels.com/photos/2144112/pexels-photo-2144112.jpeg"><p>Tarte Fraise</p></div>
+        `;
+    } else if (type === 'burgers') {
+        titre.innerText = "Nos Burgers Gourmet";
+        grille.innerHTML = `
+            <div><img src="https://images.pexels.com/photos/1633525/pexels-photo-1633525.jpeg"><p>Le Classique</p></div>
+            <div><img src="https://images.pexels.com/photos/1199957/pexels-photo-1199957.jpeg"><p>Le Montagnard</p></div>
+        `;
     }
-    .navbar.active { display: flex; }
-    .navbar li a { color: #111; font-size: 1.5em; margin: 10px 0; }
-    .propos, .menu, .contact { padding: 50px 20px; }
-    .col50 { width: 100%; }
+    modale.style.display = "block";
+}
+
+function fermerGalerie() {
+    document.getElementById('fenetreGalerie').style.display = "none";
+}
+
+// Fermer au clic sur le fond
+window.onclick = function(event) {
+    const modale = document.getElementById('fenetreGalerie');
+    if (event.target == modale) {
+        modale.style.display = "none";
+    }
 }
