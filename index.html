@@ -98,14 +98,21 @@
         <div class="titre">
             <h2 class="titre-texte">Ce que nos <span>C</span>lients disent</h2>
         </div>
-        <div class="contenu-avis" id="listeAvis">
-            <div class="bulle-avis">
-                <p>"Le gâteau d'anniversaire de mon fils était magnifique et délicieux ! Une équipe à l'écoute."</p>
-                <h4>- Marie L.</h4>
-            </div>
-            <div class="bulle-avis">
-                <p>"Le meilleur Paris-Brest que j'ai mangé. On sent la qualité des ingrédients."</p>
-                <h4>- Thomas V.</h4>
+      <section class="avis" id="avis">
+    <div class="titre">
+        <h2 class="titre-texte">Ce que nos <span>C</span>lients disent</h2>
+    </div>
+    
+    <div class="contenu-avis" id="listeAvis"></div>
+
+    <div class="form-avis">
+        <form id="formAvis">
+            <input type="text" name="name" placeholder="Votre Prénom" required>
+            <textarea name="message" placeholder="Votre commentaire..." required></textarea>
+            <button type="submit" class="btn">Publier l'avis</button>
+        </form>
+    </div>
+</section></h4>
             </div>
         </div>
 
@@ -159,3 +166,4 @@
     <script type="module" src="script.js"></script>
 </body>
 </html>
+
