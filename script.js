@@ -1,51 +1,44 @@
-// 1. Gestion du menu qui change de couleur au scroll
+// 1. Menu Sticky
 window.addEventListener('scroll', function(){
     const header = document.querySelector('header');
     header.classList.toggle("sticky", window.scrollY > 0);
 });
 
-// 2. Fonction pour ouvrir/fermer le menu sur Mobile
+// 2. Menu Mobile
 function toggleMenu(){
-    const menuToggle = document.querySelector('.menuToggle');
     const navbar = document.querySelector('.navbar');
     navbar.classList.toggle('active');
 }
 
-// 3. Fonction pour ouvrir la galerie quand on clique sur une image
+// 3. Galerie
 function ouvrirGalerie(type) {
     const modale = document.getElementById('fenetreGalerie');
     const titre = document.getElementById('titreGalerie');
     const grille = document.getElementById('contenuPhotos');
     
-    // On vide la grille avant de mettre les nouvelles photos
     grille.innerHTML = "";
     
     if (type === 'gateaux') {
-        titre.innerText = "Toute notre gamme de Gâteaux";
+        titre.innerText = "Nos Spécialités Sucrées";
         grille.innerHTML = `
-            <img src="https://images.pexels.com/photos/1070850/pexels-photo-1070850.jpeg">
-            <img src="https://images.pexels.com/photos/2144112/pexels-photo-2144112.jpeg">
-            <img src="https://images.pexels.com/photos/461060/pexels-photo-461060.jpeg">
-            <img src="https://images.pexels.com/photos/132694/pexels-photo-132694.jpeg">
+            <div><img src="https://images.pexels.com/photos/1070850/pexels-photo-1070850.jpeg"><p>Gâteau Royal</p></div>
+            <div><img src="https://images.pexels.com/photos/2144112/pexels-photo-2144112.jpeg"><p>Tarte Fraise</p></div>
         `;
     } else if (type === 'burgers') {
-        titre.innerText = "Toute notre gamme Gourmet";
+        titre.innerText = "Nos Burgers Gourmet";
         grille.innerHTML = `
-            <img src="https://images.pexels.com/photos/1633525/pexels-photo-1633525.jpeg">
-            <img src="https://images.pexels.com/photos/1199957/pexels-photo-1199957.jpeg">
-            <img src="https://images.pexels.com/photos/1279330/pexels-photo-1279330.jpeg">
+            <div><img src="https://images.pexels.com/photos/1633525/pexels-photo-1633525.jpeg"><p>Le Classique</p></div>
+            <div><img src="https://images.pexels.com/photos/1199957/pexels-photo-1199957.jpeg"><p>Le Montagnard</p></div>
         `;
     }
-    
     modale.style.display = "block";
 }
 
-// 4. Fonction pour fermer la galerie
 function fermerGalerie() {
     document.getElementById('fenetreGalerie').style.display = "none";
 }
 
-// 5. Fermer la galerie si on clique sur le fond noir
+// Fermer au clic sur le fond
 window.onclick = function(event) {
     const modale = document.getElementById('fenetreGalerie');
     if (event.target == modale) {
