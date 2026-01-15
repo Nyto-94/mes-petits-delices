@@ -1,28 +1,72 @@
-window.addEventListener('scroll', function(){
-    const header = document.querySelector('header');
-    header.classList.toggle("sticky", window.scrollY > 0);
-});
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getFirestore, collection, addDoc, onSnapshot, query, orderBy } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-function toggleMenu(){
+// TA CONFIGURATION FIREBASE
+const firebaseConfig = {
+  apiKey: "AIzaSyBq5EdIl3eyS3Ima3FIHfkWEnzPoczkXFc",
+  authDomain: "site-boutique-96f52.firebaseapp.com",
+  projectId: "site-boutique-96f52",
+  storageBucket: "site-boutique-96f52.firebasestorage.app",
+  messagingSenderId: "1075677172691",
+  appId: "1:1075677172691:web:8caae8a9d3b455e1011526",
+  measurementId: "G-Q2MQR2P0WS"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const avisCol = collection(db, "avis");
+
+// FONCTIONS GLOBALES (Accessibles depuis le HTML)
+window.toggleMenu = function() {
     const navbar = document.querySelector('.navbar');
     navbar.classList.toggle('active');
 }
 
-function ouvrirGalerie(type) {
+window.ouvrirGalerie = function(type) {
     const modale = document.getElementById('fenetreGalerie');
     const titre = document.getElementById('titreGalerie');
     const grille = document.getElementById('contenuPhotos');
     grille.innerHTML = "";
     if (type === 'gateaux') {
         titre.innerText = "Nos Spécialités Sucrées";
-        grille.innerHTML = `<div><img src="https://images.pexels.com/photos/1070850/pexels-photo-1070850.jpeg"><p>Gâteau Royal</p></div><div><img src="https://images.pexels.com/photos/2144112/pexels-photo-2144112.jpeg"><p>Tarte Fraise</p></div>`;
-    } else if (type === 'burgers') {
+        grille.innerHTML = `<div><img src="https://images.pexels.com/photos/1070850/pexels-photo-1070850.jpeg"><p>Gâteau Royal</p></div>`;
+    } else {
         titre.innerText = "Nos Burgers Gourmet";
-        grille.innerHTML = `<div><img src="https://images.pexels.com/photos/1633525/pexels-photo-1633525.jpeg"><p>Le Classique</p></div><div><img src="https://images.pexels.com/photos/1199957/pexels-photo-1199957.jpeg"><p>Le Montagnard</p></div>`;
+        grille.innerHTML = `<div><img src="https://images.pexels.com/photos/1633525/pexels-photo-1633525.jpeg"><p>Le Classique</p></div>`;
     }
     modale.style.display = "block";
 }
 
-function fermerGalerie() {
+window.fermerGalerie = function() {
     document.getElementById('fenetreGalerie').style.display = "none";
 }
+
+// GESTION DES AVIS
+const form = document.querySelector('#formAvis');
+if(form) {
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        try {
+            await addDoc(avisCol, {
+                name: form.name.value,
+                message: form.message.value,
+                date: new Date()
+            });
+            form.reset();
+            alert("Avis publié !");
+        } catch (e) { console.error("Erreur: ", e); }
+    });
+}
+
+// AFFICHAGE EN TEMPS RÉEL
+const q = query(avisCol, orderBy("date", "desc"));
+onSnapshot(q, (snapshot) => {
+    const liste = document.getElementById('listeAvis');
+    if(liste) {
+        liste.innerHTML = "";
+        snapshot.forEach((doc) => {
+            const data = doc.data();
+            liste.innerHTML += `<div class="bulle-avis"><p>"${data.message}"</p><h4>- ${data.name}</h4></div>`;
+        });
+    }
+});
