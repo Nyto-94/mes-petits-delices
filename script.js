@@ -14,50 +14,37 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const avisCol = collection(db, "avis");
 
-// --- TES FONCTIONS D'ORIGINE ---
+// Effet Sticky Header
 window.addEventListener('scroll', function(){
     const header = document.querySelector('header');
     header.classList.toggle("sticky", window.scrollY > 0);
 });
 
+// Menu Mobile
 window.toggleMenu = function(){
     const navbar = document.querySelector('.navbar');
     navbar.classList.toggle('active');
 }
 
-window.ouvrirGalerie = function(type) {
-    const modale = document.getElementById('fenetreGalerie');
-    const titre = document.getElementById('titreGalerie');
-    const grille = document.getElementById('contenuPhotos');
-    grille.innerHTML = "";
-    if (type === 'gateaux') {
-        titre.innerText = "Nos Spécialités Sucrées";
-        grille.innerHTML = `<div><img src="https://images.pexels.com/photos/1070850/pexels-photo-1070850.jpeg"><p>Gâteau Royal</p></div><div><img src="https://images.pexels.com/photos/2144112/pexels-photo-2144112.jpeg"><p>Tarte Fraise</p></div>`;
-    } else if (type === 'burgers') {
-        titre.innerText = "Nos Burgers Gourmet";
-        grille.innerHTML = `<div><img src="https://images.pexels.com/photos/1633525/pexels-photo-1633525.jpeg"><p>Le Classique</p></div><div><img src="https://images.pexels.com/photos/1199957/pexels-photo-1199957.jpeg"><p>Le Montagnard</p></div>`;
-    }
-    modale.style.display = "block";
-}
-
-window.fermerGalerie = function() {
-    document.getElementById('fenetreGalerie').style.display = "none";
-}
-
-// --- GESTION DES AVIS ---
+// Envoi d'un avis
 const form = document.querySelector('#formAvis');
 if(form) {
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
-        await addDoc(avisCol, {
-            name: form.name.value,
-            message: form.message.value,
-            date: new Date()
-        });
-        form.reset();
+        try {
+            await addDoc(avisCol, {
+                name: form.name.value,
+                message: form.message.value,
+                date: new Date()
+            });
+            form.reset();
+        } catch (err) {
+            console.error("Erreur Firebase :", err);
+        }
     });
 }
 
+// Affichage des avis en direct
 onSnapshot(query(avisCol, orderBy("date", "desc")), (snapshot) => {
     const listeAvis = document.getElementById('listeAvis');
     if(listeAvis) {
@@ -72,3 +59,12 @@ onSnapshot(query(avisCol, orderBy("date", "desc")), (snapshot) => {
         });
     }
 });
+
+// Galerie (si besoin)
+window.ouvrirGalerie = function(type) {
+    const modale = document.getElementById('fenetreGalerie');
+    modale.style.display = "block";
+}
+window.fermerGalerie = function() {
+    document.getElementById('fenetreGalerie').style.display = "none";
+}
